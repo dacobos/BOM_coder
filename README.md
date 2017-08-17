@@ -7,7 +7,8 @@
 Developed and tested for macOS Sierra.
 Does not support BOMs with services or subscriptions only products
 
-How to Install
+How to Install:
+
 1 Verify virtualenv is already installed with the command: virtualenv  --version
 
 2 Unzip file to desired installation folder Ex: /Users/username/
