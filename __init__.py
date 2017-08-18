@@ -27,6 +27,7 @@ sys.path.insert(0, library)
 from xls_writter import *
 
 db_sap = os.getcwd()+'/resources/db_sap.xlsx'
+ps = os.getcwd()+'/resources/psheader.xls'
 
 # Get the param folder to proccess
 parser = argparse.ArgumentParser(description='Syntax Example: python ofertas_producto.py  /Users/user/BOMS_Listos')
@@ -53,6 +54,7 @@ files = getFiles(folder)
 
 #Iterate files
 new_boms = []
+new_offers = []
 for f in files:
     # Concatenate the folder with file to create full path filename
     if folder[len(folder)-1] == "/":
@@ -64,7 +66,7 @@ for f in files:
         continue
 
     if '.xls' in filename:
-        bom = readxls(filename)
+        bom = readbom(filename)
     else:
         continue
 
@@ -105,8 +107,27 @@ for f in files:
 
 
     # print bom
-    new_boms.append(xlswritter(bom, filename))
-print "The following BOMS where created"
-for elem in new_boms:
-    print elem
     # Create the new BOM with SAP codes
+    new_boms.append(xlswritter(bom, filename))
+
+    # Get the site list of BOM
+    siteList = getSitelist(bom, filename)
+    # print siteList
+
+    # # Create pricesheet skeleton
+    # createSkeleton(ps,filename)
+
+    new_offers.append(writePriceSheet(bom, siteList, ps, filename))
+
+
+
+print "The following BOMS where created"
+
+for i in range(len(new_boms)):
+    print new_boms[i]
+    print new_offers[i]
+
+
+# Write BOM to pricesheet
+
+    # writeBOMtops(bom,filename)

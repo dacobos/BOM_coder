@@ -36,7 +36,7 @@ def getIds(filename):
         result = [start_of_bom_id, end_of_bom_id, total_price_id]
         return result
 
-def readxls(filename):
+def readbom(filename):
     book = xlrd.open_workbook(filename)
     # get the first worksheet
     xl_sheet = book.sheet_by_index(0)
@@ -71,3 +71,16 @@ def readxls(filename):
     data[total_price_id][9] = product_total
 
     return data
+
+
+def getSitelist(bom, filename):
+    Ids = getIds(filename)
+    start_of_bom_id = Ids[0]
+    end_of_bom_id = Ids[1]
+    total_price_id  = Ids[2]
+
+    siteList = []
+    for i in range(start_of_bom_id, end_of_bom_id):
+        if bom[i][1] != '' and bom[i][2] == '' and bom[i][3] == '' and bom[i][4] == '' and bom[i][5] == '':
+            siteList.append(bom[i][1])
+    return siteList
